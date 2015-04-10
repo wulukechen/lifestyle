@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://www.example.org/dao" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	           xsi:schemaLocation="http://www.example.org/dao dao.xsd">
+	<charset>UTF-8</charset>
+	<configPath>classpath:SqlMapConfig.xml</configPath>
+	<nameSpace>com.weduoo.lifestyle</nameSpace>
+</configuration>

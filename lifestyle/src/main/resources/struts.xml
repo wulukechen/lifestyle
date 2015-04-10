@@ -1,0 +1,22 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+    "/xsd/struts-2.1.7.dtd">
+<struts>
+<include file="struts-default.xml"/>
+<constant name="struts.locale" value="zh_CN"></constant>
+<constant name="struts.i18n.encoding" value="UTF-8"></constant> 
+<constant name="struts.enable.DynamicMethodInvocation" value="false" /> 
+<constant name="struts.devMode" value="true" /> 
+<constant name="struts.objectFactory" value="spring"/>
+<constant name="struts.multipart.maxSize" value="200000000000" />
+
+<constant name="struts.action.extension" value="do"/>
+<package name="file" extends="struts-default" namespace="/file">
+    <action name="fileupload" class="xtglController" method="fileupload"></action>
+    <action name="downloadFile" class="xtglController" method="downloadFile"></action>
+    <action name="deleteFiles" class="xtglController" method="deleteFiles"></action>
+    <action name="seldw" method="seldw" class="xtglController"/>
+    <action name="seldw2" method="seldw2" class="xtglController"/>
+    <action name="combo_list" class="xtglController" method="combo_list"></action>
+</package>
+</struts>
