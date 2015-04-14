@@ -28,7 +28,7 @@
        </property>
        <property name="instances" >
           <set>
-             <ref bean="poiRestServer"/>
+             <ref bean="upAndDownRestServer"/>
           </set>
        </property>
     </bean>
