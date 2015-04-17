@@ -5,7 +5,7 @@
 	<properties resource="dao.properties" />
 	<typeAliases>
 		<typeAlias type="com.hdsx.dao.util.BoneCPFactory" alias="BONECP" />
-		<typeAlias type="com.hdsx.hnjcfx.bean.Poi" alias="poi" />
+		<typeAlias type="com.weduoo.lifestyle.pub.bean.Images" alias="images" />
 	</typeAliases>
 	<environments default="jdbc">
 		<environment id="jdbc">
@@ -27,6 +27,6 @@
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource="com/hdsx/hnjcfx/config/poi.xml" />
+		<mapper resource="com/weduoo/lifestyle/pub/config/images.xml" />
 	</mappers>
 </configuration>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/xsd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weduoo.lifestyle.images">
+	<!-- 房屋土地 -->
+	<select id="saveImages" parameterType="images">
+		INSERT INTO Images(ID,ImageName,reName,) 
+		VALUES (#{id},#{imageName},#{reName})
+	</select>
+	
+</mapper>
