@@ -5,13 +5,13 @@ public class Images {
 	private String id;
 	private String ImageName;
 	private String ImagePath;
-	private String ReName;
+	private String ReImageName;
 	
-	public String getReName() {
-		return ReName;
+	public String getReImageName() {
+		return ReImageName;
 	}
-	public void setReName(String reName) {
-		ReName = reName;
+	public void setReImageName(String reImageName) {
+		ReImageName = reImageName;
 	}
 	public String getId() {
 		return id;

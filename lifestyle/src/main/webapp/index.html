@@ -4,10 +4,37 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>上传测试</title>
 <link rel="stylesheet" type="text/css" href="js/uploadify/uploadify.css">
+<link rel="stylesheet" type="text/css" href="js/jcrop/css/jquery.Jcrop.css">
 <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="js/jcrop/js/jquery.Jcrop.js"></script>
 <script type="text/javascript" src="js/uploadify/swfobject.js"></script>
 <script type="text/javascript" src="js/uploadify/jquery.uploadify.js"></script>
 <script type="text/javascript" src="js/upload.js"></script>
+<style type="text/css">
+	#preview-pane {
+	  display: block;
+	  position: absolute;
+	  z-index: 2000;
+	  top: 150px;
+	  left: 680px;
+	  padding: 6px;
+	  border: 1px rgba(0,0,0,.4) solid;
+	  background-color: white;
+	
+	  -webkit-border-radius: 6px;
+	  -moz-border-radius: 6px;
+	  border-radius: 6px;
+	
+	  -webkit-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+	  -moz-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+	  box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+	}
+	#preview-pane .preview-container {
+	  width: 250px;
+	  height: 170px;
+	  overflow: hidden;
+	}
+</style>
 </head>
 <body>
 	<form></form>
@@ -16,8 +43,23 @@
 			<input type="file" id="upload" name="upload" />
 		</div>
 		
-	<div id="images" align="center">
-			
+	<div>
+		<img  id="images">
+	</div>
+	<div id="preview-pane">
+          <div class="preview-container" id="cutImages">
+          	<img  class="jcrop-preview" style="display:none">
+          </div>
+    </div>
+    <div align="center">
+		<form id="crop_form">
+			<input type="hidden" id="x" name="x" />
+			<input type="hidden" id="y" name="y" />
+			<input type="hidden" id="w" name="w" />
+			<input type="hidden" id="h" name="h" />
+			<input type="hidden" id="imageName" name="imageName" value=""/>
+			<P><input type="button" value="确认剪裁" id="crop_submit"  width="100px" height="100px"/></P>
+		</form>
 	</div>
 </body>
 </html>

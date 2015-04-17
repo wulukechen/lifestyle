@@ -1,5 +1,12 @@
 package com.weduoo.lifestyle.pub.rest;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.awt.image.CropImageFilter;
+import java.awt.image.FilteredImageSource;
+import java.awt.image.ImageFilter;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -15,9 +22,11 @@ import java.util.Random;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -59,7 +68,7 @@ public class UpAndDownRestServer extends BaseActionSupport{
 		 try {
 	         image = saveFile(request);
 	         if (!image.getImageName().equals("")) {
-	        	 String id=UUID.randomUUID().toString();
+	        	 String id=UUID.randomUUID().toString().replaceAll("-", "");
 	        	 image.setId(id);
 	        	 upAndDownServer.saveImages(image);
 	        	 JsonUtils.write(image, this.getresponse().getWriter());
@@ -95,7 +104,7 @@ public class UpAndDownRestServer extends BaseActionSupport{
 		                    	SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmssSSS");
 		            			reName = sdf.format(new Date());
 		            			//String uri = ServletActionContext.getRequest().getRealPath("/images")+"\\"+reName;
-		            			String uri=request.getSession().getServletContext().getRealPath("/images")+"\\"+ imageName;
+		            			String uri=request.getSession().getServletContext().getRealPath("/upload")+"\\"+ imageName;
 		            			System.out.println(uri);
 		            			try {
 		                            item.write(new File(uri));
@@ -109,7 +118,7 @@ public class UpAndDownRestServer extends BaseActionSupport{
 		    } catch (Exception e) {
 		    }
 		    Images image=new Images();
-		    image.setReName(reName);
+		    image.setReImageName(reName);
 		    image.setImageName(imageName);
 		    return image;
 		}
@@ -120,5 +129,52 @@ public class UpAndDownRestServer extends BaseActionSupport{
 		            fileNameInput.lastIndexOf("\\") + 1, fileNameInput.length());
 		    return fileNameOutput;
 		}
+		
+		@POST 
+		@Path("/cutImage")
+		@Produces(MediaType.TEXT_PLAIN)
+		public void cutImage(@FormParam("x") int x,@FormParam("y") int y,
+				@FormParam("w") double w,@FormParam("h") double h,
+				@FormParam("imageName") String imageName,@Context HttpServletRequest request){
+			System.out.println(x+"-"+y+"-"+w+"-"+h+"-"+imageName);
+			String  path = request.getSession().getServletContext().getRealPath("/upload")+"\\";
+			String spath=path+imageName.substring(0,imageName.lastIndexOf("."));
+			String  gpath=path+imageName;
+			System.out.println(path);
+			abscut(gpath, spath,x, y, w, h);
+		}
+		
+		public static void abscut(String srcImageFile,String path, int x, int y, double destWidth,double destHeight) {
+			try {
+			Image img;
+			ImageFilter cropFilter;
+			// 读取源图像
+			BufferedImage bi = ImageIO.read(new File(srcImageFile));
+			int srcWidth = bi.getWidth(); // 源图宽度
+			int srcHeight = bi.getHeight(); // 源图高度
 
+			if (srcWidth >= destWidth && srcHeight >= destHeight) {
+			Image image = bi.getScaledInstance(srcWidth, srcHeight,Image.SCALE_DEFAULT);
+
+			int x1 = x*srcWidth/420;
+			int y1 = y*srcWidth/420;
+			int w = (int) (destWidth*srcWidth/420);
+			int h = (int) (destHeight*srcWidth/420);
+
+			// 四个参数分别为图像起点坐标和宽高
+			// 即: CropImageFilter(int x,int y,int width,int height)
+			cropFilter = new CropImageFilter(x1, y1, w, h);
+			img = Toolkit.getDefaultToolkit().createImage(
+			new FilteredImageSource(image.getSource(), cropFilter));
+			BufferedImage tag = new BufferedImage(w, h,BufferedImage.TYPE_INT_RGB);
+			Graphics g = tag.getGraphics();
+			g.drawImage(img, 0, 0, null); // 绘制缩小后的图
+			g.dispose();
+			// 输出为文件
+			ImageIO.write(tag, "JPEG", new File(path+"_small.jpg"));
+			}
+			} catch (Exception e) {
+			e.printStackTrace();
+			}
+		}
 }

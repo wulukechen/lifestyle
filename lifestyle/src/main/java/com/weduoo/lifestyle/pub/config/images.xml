@@ -3,8 +3,8 @@
 <mapper namespace="com.weduoo.lifestyle.images">
 	<!-- 房屋土地 -->
 	<select id="saveImages" parameterType="images">
-		INSERT INTO Images(ID,ImageName,reName,) 
-		VALUES (#{id},#{imageName},#{reName})
+		INSERT INTO Images(ID,ImageName,reImageName) 
+		VALUES (#{id},#{imageName},#{reImageName})
 	</select>
 	
 </mapper>
